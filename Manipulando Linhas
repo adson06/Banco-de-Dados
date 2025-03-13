@@ -1,0 +1,55 @@
+use cadastro;
+
+create table curso(
+id_curso int unsigned auto_increment not null,
+nome varchar(30) not null,
+sexo enum('M', 'F'),
+peso decimal (5, 2),
+altura decimal (3, 2),
+nacionalidade varchar(30) default 'Brasil',
+primary key(id_curso)
+
+);
+
+insert into curso values
+(default, 'Henrique', 'M', '77.7', '1.77', 'Brasil');
+
+select * from curso;
+
+update curso
+set nome = 'Julia'
+where id_curso = '2';
+
+select * from curso;
+
+update curso
+set sexo = 'F'
+where id_curso = '2';
+
+update curso
+set peso = '67.80'
+where id_curso = '2'
+limit 1;
+select * from curso;
+
+
+update curso
+set altura = '1.55'
+where id_curso = '2';
+
+select * from curso;
+
+update curso
+set altura = '1.77'
+where id_curso = '1';
+
+
+select * from curso;
+
+delete from curso
+where id_curso = '2';
+
+select * from curso;
+
+
+truncate curso;
