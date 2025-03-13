@@ -1,0 +1,53 @@
+create table curso(
+nome varchar(20) not null,
+descricao text,
+cargo int unsigned,
+totalaulas int unsigned,
+ano year default '2016'
+
+);
+ alter table curso
+ add column id_curso int not null;
+ 
+ alter table curso
+ add column profissao varchar(20);
+ 
+ alter table curso
+ drop column profissao;
+ 
+ alter table curso
+ add column alunos varchar(10);
+ 
+ alter table curso
+ modify column alunos varchar(30);
+ 
+ alter table curso 
+ change column alunos quantalunos varchar(30);
+ 
+ alter table curso
+ add column materias varchar(15) after nome;
+ 
+ alter table curso
+ rename to cursos;
+ 
+ alter table cursos
+ add primary key (id_curso);
+ 
+ describe cursos;
+ 
+ alter table cursos
+ modify column id_curso int first;
+ 
+ describe cursos;
+ 
+ insert into cursos value 
+ (default, 'Henrique', 'BCC', 'nao sei', '2', '2', '2025', '30');
+ 
+ select * from cursos;
+ 
+ 
+ 
+ 
+
+ 
+
