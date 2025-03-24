@@ -1,0 +1,157 @@
+XAMPP = Faz a conexão com MySQL 
+
+Tipos Primitivos:
+
+Numéricos: Inteiro, Real e Lógico
+
+Data/Tempo: Date, DateTime, TimeStamp, Time, Year
+
+Literal: Caractere, Texto, Binário e Coleção
+
+Espacial: geometry, point, polign
+
+
+create database = DDL(data definition language) = comando de definição
+use database
+create table = DDL(data definition language) = comando de definição
+describe + (nome da tabela)
+drop database + nome que vc colocou
+
+
+## ***INSERINDO DADOS NA TABELA***
+
+insert to + nome da tabela
+insert to = DML (data manipulation language)
+
+select * from + nome da tabela
+
+default = Padrão
+
+
+# **Manipulando Colunas**
+
+Alter table  = alterar table
+add column + nome + tipo primitivo = adicionar coluna
+drop column = eliminar uma coluna
+
+modify column = modifica o tipo primitivo do campo 
+change column (nome da coluna) + (novo nome da coluna) + tipo primitivo;
+change = renomeia o nome da coluna
+rename to = renomeia o nome da tabela inteira
+if not exists
+if exists
+
+drop table = DDL
+alter table = DDL
+
+
+
+# Modificando Linhas Incorretas 
+
+update + nome da tabela
+set + nome da coluna  = ' (nome modificado)  '
+where(onde) + (nome do id da sua tabela ou   nome da coluna que voce quer alterar) = '  numero da linha que voce quer que seja alterada ' 
+
+Limit + numero de linhas que você quer que seja alterada
+Limit = Limita quantas voce quer que seja alterada
+
+
+# Removendo uma Linha
+
+delete from + nome da tabela
+where + (nome do id da sua tabela ou nome da coluna que voce quer alterar) = ' numero da linha que voce quer que seja alterada '
+
+select * from + nome da tabela;
+
+
+## Removendo todas linhas da tabela
+
+Truncate + nome da tabela
+
+
+update = DML
+delete = DML
+Truncate = DML
+
+
+# SELECT
+
+Select = DML
+
+select * from gafanhotos
+order by nome que voce deseja ou asc ;  // Ordena de forma crescente ou alfabetica(de A a Z)
+
+select * from gafanhotos
+order by nome desc; //  // Ordena de forma descrecente ou de Z a A
+
+select nome, sexo, peso from gafanhotos // Filtra as colunas
+
+
+select * from gafanhotos
+where sexo = "M"
+order by nome // mostra somente as pessoas do sexo Masculino
+
+
+select profissao, sexo, nacionalidade from gafanhotos
+where sexo = "M"
+order by nome 
+
+
+
+select nome, ano from cursos
+where ano between 2014 and 2016
+order by nome;  // mostra os anos que estão entre 2014 e 2016
+
+
+select nome, ano from cursos
+where ano between 2014 and 2016
+order by nome;  
+
+
+
+select nome, ano from cursos
+where ano <= 2015
+order by nome;   // mostra os anos menores ou iguas a 2015
+
+
+
+select nome, ano from cursos
+where ano in (2014, 2016)
+order by ano // mostra somente os anos de 2014 e 2016
+
+
+Group by
+Distinct 
+Having
+
+
+select distinct carga from cursos
+order by carga;
+
+select carga from cursos
+group by carga;
+
+select carga,count(nome) from cursos
+group by carga
+order by carga;
+
+select ano, count(*) from cursos
+group by ano desc
+having count(ano) >=5
+order by ano;
+
+
+Inner Join = relaciona  uma tabela com a outra, mas somente aqueles campos ligados a outra. 
+
+Outer Join = Relaciona uma tabela, mas também mostra as linhas não correspondentes de uma.
+
+
+
+
+Server -----> Data Export  -----> Dump Structure and Data
+
+
+# Importar para um Novo Servidor 
+
+
+Server-----> Data Import
