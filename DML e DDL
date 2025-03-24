@@ -1,0 +1,88 @@
+use cadastro;
+
+alter table gafanhotos
+add column cursopreferido int;
+
+alter table gafanhotos
+add foreign key(cursopreferido) references cursos(idcurso);
+
+update gafanhotos set cursopreferido = '6' where id = '1';
+select * from gafanhotos;
+
+update gafanhotos set cursopreferido = '4' where id = '2';
+select * from gafanhotos;
+
+select gafanhotos.nome, cursos.nome, cursos.ano from gafanhotos join cursos on cursos.idcurso = gafanhotos.cursopreferido;
+
+select g.nome, c.nome, c.ano from gafanhotos as g inner join cursos as c on cursos.idcurso = gafanhotos.cursopreferido;
+
+select g.nome, c.nome, c.ano from gafanhotos as g  join cursos as c on cursos.idcurso = gafanhotos.cursopreferido;
+
+
+select gafanhotos.nome, cursos.nome, cursos.ano from gafanhotos inner join cursos on cursos.idcurso = gafanhotos.cursopreferido;
+
+select gafanhotos.nome, cursos.nome, cursos.ano from gafanhotos right join cursos on cursos.idcurso = gafanhotos.cursopreferido;
+
+select gafanhotos.nome, cursos.nome, cursos.ano from gafanhotos left join cursos on cursos.idcurso = gafanhotos.cursopreferido;
+
+
+
+
+select *from cursos
+where nome like 'A%';
+
+select *from cursos
+where nome like '%a';
+
+select *from cursos
+where nome like '%a%';
+
+select *from cursos
+where nome like 'PH%P';
+
+select *from cursos
+where nome like 'PH%P%';
+
+select *from cursos
+where nome like 'PH%P_';
+
+select distinct nacionalidade from gafanhotos;
+
+select distinct carga from cursos;
+
+
+select count(*) from cursos;
+
+select count(*) from cursos
+where carga <= 40;
+
+select max(carga) from cursos;
+
+select min(carga) from cursos;
+
+select sum(carga) from cursos;
+
+select avg(carga) from cursos;
+
+select distinct carga from cursos
+order by carga;
+
+select carga from cursos
+group by carga;
+
+select carga,count(nome) from cursos
+group by carga
+order by carga;
+
+select ano, count(*) from cursos
+group by ano desc
+having count(ano) >=5
+order by ano;
+
+select avg(carga) from cursos;
+
+select carga, count(*) from cursos
+where ano > 2015
+group by carga
+having carga > (select avg(carga) from cursos);
+
