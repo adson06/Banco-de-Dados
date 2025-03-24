@@ -1,0 +1,79 @@
+create database bibliotecadb;
+use bibliotecadb;
+
+create table Autores(
+id_autor int auto_increment primary key,
+nome varchar(50) not null,
+sobrenome varchar(50) not null,
+nacionalidade varchar(30) not null
+);
+
+create table Categorias(
+id_categoria int auto_increment primary key,
+descricao varchar(50) not null
+
+);
+
+CREATE TABLE livros (
+    id_livro INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    ano YEAR
+);
+
+insert into Autores value
+( "1","João", "Silva", "Brasileiro"),
+( "2","Maria", "Oliveira","Portuguesa"),
+( "3","Carlos","Santos", "Brasileiro"),
+( "4","Ana",  "Pereira", "Espanhola"),
+("Pedro", "Gomes",  "Argentino");
+
+select * from Autores;
+
+insert into Categorias value
+("Ficção"),
+("Não-Ficção"),
+("História"),
+("Ciência");
+
+select * from Categorias;
+
+insert into livros values
+('1', 'O Mistério do Lago', '2015'),
+('2', 'História do Brasil', '2018'),
+('3', 'A Ciência da Vida', '2020' ),
+('4', 'Contos de Fadas', '2012' ),
+('5', 'Memórias de um Viajante', '2019'),
+('6', 'A Revolução Industrial', '2017');
+
+select * from livros;
+
+select nome, sobrenome, nacionalidade from Autores
+where nacionalidade = 'Brasileiro';
+
+select titulo, ano from livros
+where ano > 2015;
+
+select descricao from Categorias
+where descricao like 'c%';
+
+select id_categoria, count(*) from Categorias;
+
+select nome, sobrenome from Autores
+where nome like '%a';
+
+update Autores
+set nacionalidade = 'Portuguesa' 
+where id_autor = '4';
+
+update livros
+set ano = '2016' 
+where id_livro = '1';
+
+update Categorias
+set descricao = 'Biografia' 
+where id_categoria = '2';
+
+
+
+
+
