@@ -1,0 +1,140 @@
+use db_venda_veiculo;
+
+select * from venda;
+
+select veiculo.marca, veiculo.modelo, veiculo.ano_fabricacao, veiculo.placa, venda.valor_venda, venda.data_venda, cliente.nome as nome_cliente, funcionario.nome as nome_funcionario
+ from veiculo inner join venda on veiculo.id_veiculo = venda.id_veiculo
+ inner join cliente on venda.id_cliente = cliente.id_cliente inner join
+ funcionario on venda.id_funcionario = funcionario.id_funcionario;
+ 
+ select avg(valor_venda) from venda;
+ 
+ create view media_venda as select round(avg(valor_venda), 2) 
+ as media_valor_venda, count(*) as total_vendas from venda;
+ 
+ select * from media_venda;
+ 
+ create view media_vendas_por_funcionario as select id_funcionario, round(avg(valor_venda), 2) as
+ media_valor_venda, count(*) as total_vendas from venda group by id_funcionario;
+ 
+ select * from media_vendas_por_funcionario;
+ 
+SELECT
+    f.nome AS nome_funcionario,
+    ROUND(AVG(v.valor_venda), 2) AS media_valor_venda,
+    COUNT(*) AS total_vendas
+FROM Venda v
+JOIN Funcionario f ON v.id_funcionario = f.id_funcionario
+GROUP BY f.nome;
+
+SELECT * FROM media_vendas_por_funcionario;
+
+update veiculo set valor = 60000 where placa = 'DEF1234';
+update veiculo set status = 'Vendido' where id_veiculo = 3;
+
+select veiculo.marca, veiculo.modelo, veiculo.ano_fabricacao, veiculo.placa, venda.valor_venda,
+ venda.data_venda, cliente.nome as nome_cliente, funcionario.nome as nome_funcionario from veiculo inner join
+ venda on veiculo.id_veiculo = venda.id_veiculo inner join cliente on venda.id_cliente = cliente.id_cliente
+ inner join funcionario on venda.id_funcionario = funcionario.id_funcionario where venda.data_venda > '2024-09-01';
+
+delimiter $$
+
+create procedure inserir_clientes() begin
+declare i int default 1;
+while i <= 50 do insert into cliente (nome, cnh, tipo_cliente, cartao_pagamento) values(
+concat('cliente', i),
+concat('cnh', lpad(i, 10, '0')),
+if(i % 2 = 0, 'Fisica', 'Juridica'),
+lpad(floor(rand() * 10000000000000000), 16, '0')
+);
+
+set i = i + 1;
+end while;
+end $$
+
+delimiter ;
+
+call inserir_clientes();
+
+
+use db_venda_veiculo;
+
+select data_venda from venda;
+
+select veiculo.marca, veiculo.modelo, veiculo.ano_fabricacao, veiculo.placa, venda.valor_venda, venda.data_venda, cliente.nome as nome_cliente, funcionario.nome as nome_funcionario
+ from veiculo inner join venda on veiculo.id_veiculo = venda.id_veiculo
+ inner join cliente on venda.id_cliente = cliente.id_cliente inner join
+ funcionario on venda.id_funcionario = funcionario.id_funcionario;
+ 
+ select avg(valor_venda) from venda;
+ 
+ create view media_venda as select round(avg(valor_venda), 2) 
+ as media_valor_venda, count(*) as total_vendas from venda;
+ 
+ select * from media_venda;
+ 
+ create view media_vendas_por_funcionario as select id_funcionario, round(avg(valor_venda), 2) as
+ media_valor_venda, count(*) as total_vendas from venda group by id_funcionario;
+ 
+ select * from media_vendas_por_funcionario;
+ 
+SELECT
+    f.nome AS nome_funcionario,
+    ROUND(AVG(v.valor_venda), 2) AS media_valor_venda,
+    COUNT(*) AS total_vendas
+FROM Venda v
+JOIN Funcionario f ON v.id_funcionario = f.id_funcionario
+GROUP BY f.nome;
+
+SELECT * FROM media_vendas_por_funcionario;
+
+update veiculo set valor = 60000 where placa = 'DEF1234';
+update veiculo set status = 'Vendido' where id_veiculo = 3;
+
+select veiculo.marca, veiculo.modelo, veiculo.ano_fabricacao, veiculo.placa, venda.valor_venda,
+ venda.data_venda, cliente.nome as nome_cliente, funcionario.nome as nome_funcionario from veiculo inner join
+ venda on veiculo.id_veiculo = venda.id_veiculo inner join cliente on venda.id_cliente = cliente.id_cliente
+ inner join funcionario on venda.id_funcionario = funcionario.id_funcionario where venda.data_venda > '2024-03-01';
+
+delimiter $$
+
+create procedure inserir_clientes() begin
+declare i int default 1;
+while i <= 50 do insert into cliente (nome, cnh, tipo_cliente, cartao_pagamento) values(
+concat('cliente', i),
+concat('cnh', lpad(i, 10, '0')),
+if(i % 2 = 0, 'Fisica', 'Juridica'),
+lpad(floor(rand() * 10000000000000000), 16, '0')
+);
+
+set i = i + 1;
+end while;
+end $$
+
+delimiter ;
+
+call inserir_clientes();
+
+select * from  veiculo 
+where ano_fabricacao > 2020;
+
+select * from cliente
+where nome like 'c%';
+
+select * from funcionario
+where nome like '%Silva%';
+
+use db_venda_veiculo;
+
+select max(valor_venda) as maior_venda, min(valor_venda) as menor_venda from venda;
+
+SELECT ano_fabricacao, COUNT(*) as quantidade_vendidos
+FROM veiculo
+GROUP BY ano_fabricacao
+ORDER BY ano_fabricacao;
+
+SELECT cliente.nome, veiculo.modelo
+FROM cliente
+JOIN venda ON cliente.id_cliente = venda.id_cliente
+JOIN veiculo ON venda.id_veiculo = veiculo.id_veiculo;
+
