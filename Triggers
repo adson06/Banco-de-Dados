@@ -1,0 +1,14 @@
+Triggers
+- Procedimentos pré-compilados e armazenados junto com um banco de dados.
+- usados automaticamente na ocorrência de algum evento especifico.
+- não recomendados para implementar as restrições de integridade.
+- poucos produtos oferecem muita coisa em suporte a integridade declarativa inicialmente.
+- As retrições de integridade eram usadas através de triggers(gatilhos).
+- Os triggers são usadas para: Alterar o usuário, medição de desempenho.
+- Evento Trigger : Quando há um evento e uma condição.
+- Trigger(evento, condição e ação).
+- Insert , Delete, Update, Before, AFTER, Instead of(em vez de).
+- A ação pode ser realizada FOR EACH ROW(para cada linha) ou FOR EACH STATEMENT
+(para cada instrução).
+- Banco de Dados Ativos = quando tem triggers associados.
+- 
