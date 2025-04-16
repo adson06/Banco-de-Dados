@@ -1,0 +1,147 @@
+ create database db_venda_veiculo;
+use db_venda_veiculo;
+
+ create table cliente(
+ id_cliente int not null auto_increment,
+ nome varchar(100) not null,
+ cnh varchar(50) not null unique,
+ placa_veiculo varchar(10),
+ tipo_cliente enum('Fisica', 'Juridica') not null,
+ cartao_pagamento varchar(50) not null,
+ primary key (id_cliente)
+ );
+ 
+ create table funcionario(
+ id_funcionario int not null auto_increment,
+ nome varchar(100) not null,
+ salario decimal(10, 2) not null default 0,
+ departamento varchar(50) not null,
+ primary key(id_funcionario)
+ );
+ 
+ create table veiculo(
+ id_veiculo int not null auto_increment,
+ marca varchar(50) not null,
+ placa varchar(50) not null unique,
+ modelo varchar(50) not null,
+ valor decimal(10, 2) not null,
+ ano_fabricacao int null check(ano_fabricacao >= 1900),
+ status enum('Disponivel', 'Vendido') not null default 'Disponivel',
+ primary key(id_veiculo)
+ );
+ 
+ create table Venda(
+ id_venda int primary key auto_increment,
+ valor_venda decimal(10, 2) not null,
+ data_venda date not null,
+ id_veiculo int not null,
+ id_funcionario int not null,
+ id_cliente int not null,
+ 
+ constraint fk_veiculo_venda foreign key(id_veiculo) references veiculo(id_veiculo) on delete restrict,
+ constraint fk_funcionario_venda foreign key(id_funcionario) references funcionario(id_funcionario) on delete restrict,
+ constraint fk_cliente_venda foreign key(id_cliente) references cliente(id_cliente) on delete restrict
+ );
+ 
+INSERT INTO cliente (nome, cnh, tipo_cliente, cartao_pagamento) VALUES
+('João Silva', '89345678901', 'Física', '4111111111111111'),
+('Empresa X', '123456789312345', 'Jurídica', '5222222222222222'),
+('Carlos', '98765432800', 'Física', '6333344444444444'),
+('Pedro', '98765433100', 'Física', '6333333333333335'),
+('Ricardo', '98765432900', 'Física', '6333333333333337');
+
+select * from cliente;
+
+INSERT INTO funcionario (nome, salario, departamento) VALUES
+('Carlos Souza', 2500.00, 'Vendas'),
+('Ana Costa', 3000.00, 'Administração'),
+('Pedro Lima', 2800.00, 'Vendas'),
+('William Roberto', 30000.00, 'RH'),
+('Paulo Castro', 5000.00, 'Estoque');
+
+select * from funcionario;
+
+INSERT INTO veiculo (marca, placa, valor, modelo, ano_fabricacao) VALUES
+('Ford', 'TEF1234', 65000, 'Fiesta', 2018),
+('Toyota', 'CCV3456', 137000, 'Corolla', 2020),
+('Chevrolet', 'MMO4321', 55000, 'Onix', 2019);
+
+select * from veiculo;
+
+insert into venda (valor_venda, data_venda, id_veiculo, id_cliente, id_funcionario) VALUES
+(45000.00, '2024-01-15', 1, 11, 1),
+(75000.00, '2024-02-20', 2, 12, 2),
+(50000.00, '2024-03-10', 3, 13, 3);
+
+
+select * from venda;
+
+
+select veiculo.marca, veiculo.modelo, veiculo.ano_fabricacao, veiculo.placa, venda.valor_venda, 
+venda.data_venda, cliente.nome, funcionario.nome from venda join veiculo on venda.id_veiculo =
+veiculo.id_veiculo join cliente on venda.id_cliente = cliente.id_cliente join funcionario on 
+venda.id_funcionario = funcionario.id_funcionario;
+
+select cliente.nome, funcionario.nome from venda join cliente on venda.id_cliente = cliente.id_cliente
+join funcionario on venda.id_funcionario = funcionario.id_funcionario;
+
+select cliente.nome, veiculo.modelo from venda join cliente on venda.id_cliente = cliente.id_cliente
+join veiculo on venda.id_veiculo = veiculo.id_veiculo;
+
+select avg(valor_venda) from venda;
+
+select id_funcionario, count(*) from funcionario
+group by id_funcionario;
+
+select max(valor_venda), min(valor_venda) from venda;
+
+select ano_fabricacao, count(*) from veiculo
+group by ano_fabricacao;
+
+create view media_venda as 
+select avg(valor_venda), count(*) as total_vendas
+from venda;
+
+select * from media_venda;
+
+create view media_vendas_por_funcionarios as
+select id_funcionario, avg(valor_venda) as media_vendas, count(*) as total_vendas
+from venda 
+group by id_funcionario;
+
+select * from media_vendas_por_funcionarios;
+
+create view media_vendas_pornome_funcionarios as 
+select funcionario.nome, avg(valor_venda) as media_vendas, count(*) as total_vendas
+from venda join funcionario on venda.id_funcionario = funcionario.id_funcionario
+group by funcionario.nome
+;
+
+select * from media_vendas_pornome_funcionarios;
+
+create view media_vendas_por_funcionarios_ordenada as 
+select max(valor_venda) as max_vendas, min(valor_venda) as min_vendas,
+avg(valor_Venda) as media_venda, count(*) as total_vendas
+ from
+venda;
+
+
+CREATE VIEW mediass_vendas_por_funcionario_por_periodo AS
+SELECT
+    funcionario.nome, DATE_FORMAT(venda.data_venda, '%Y-%m-%d') AS periodo,
+    COUNT(*) AS total_vendas,
+    AVG(venda.valor_venda) AS media_valor_venda
+FROM
+    venda
+JOIN
+    funcionario ON venda.id_funcionario = funcionario.id_funcionario
+WHERE
+    venda.data_venda >= '2024-01-01'
+GROUP BY
+    funcionario.nome,  DATE_FORMAT(venda.data_venda, '%Y-%m-%d')
+ORDER BY
+    funcionario.nome, periodo;
+
+drop view mediass_vendas_por_funcionario_por_periodo;
+-- Consulta à view
+SELECT * FROM mediass_vendas_por_funcionario_por_periodo;
